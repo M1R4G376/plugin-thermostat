@@ -644,10 +644,12 @@ class thermostat extends eqLogic {
 		$cron->setSchedule(cron::convertDateToCron($_next));
 		$cron->setOnce(1);
 		$cron->save();
-		$lastReschedule = $this->getCmd(null, 'lastReschedule');
-		if (is_object($lastReschedule)) {
-    			$lastReschedule->event(date('Y-m-d H:i:s', $_next));
-		}
+		if (!$_stop) {
+        		$lastReschedule = $this->getCmd(null, 'lastReschedule');
+        		if (is_object($lastReschedule)) {
+            			$lastReschedule->event(date('Y-m-d H:i:s', $_next));
+        		}
+   	 	}
 	}
 
 	public function calculTemporalData($_consigne, $_allowOverfull = false) {
